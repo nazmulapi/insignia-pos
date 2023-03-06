@@ -37,19 +37,7 @@ const Routes = () => {
 	return (
 		<>
 			<PathWays>
-
-					<Route path="/dashbord" element={<Dashboard />} />
-
-					<Route path="/restaurant-pos" element={<RestaurantPos />} />
-					<Route path="/current-orders" element={<CurrentOrders />} />
-
-					<Route path="/room-serive" element={<RoomServicePos />} />
-					<Route path="/current-orders" element={<COrders />} />
-
-					<Route path="" element={<CardPos />} />
-
-
-				{/* {!_.isNil(posAccessPermissions) &&
+				{!_.isNil(posAccessPermissions) &&
 					_.size(posAccessPermissions) > 0 &&
 					posAccessPermissions.map((pos_name, index) => {
 						return (
@@ -63,8 +51,7 @@ const Routes = () => {
 								{pos_name === 'card' && <Route path="" element={<CardPos />} />}
 							</Route>
 						);
-					})} */}
-
+					})}
 				<Route path="/login" element={<Login />} />
 				<Route path="*" element={<NotFound />} />
 			</PathWays>

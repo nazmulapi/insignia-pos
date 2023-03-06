@@ -81,7 +81,7 @@ function App() {
 	return (
 		<>
 			<Provider store={store}>
-				<BrowserRouter basename="/insignia-pos">
+				<BrowserRouter basename="/">
 					<PersistGate loading={null} persistor={persistor}>
 						<AppContainer />
 					</PersistGate>
