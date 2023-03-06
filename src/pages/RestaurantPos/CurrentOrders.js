@@ -15,6 +15,7 @@ const CurrentOrders = () => {
 	const [printPreviewContent, setPrintPreviewContent] = useState({});
 	const [isKitchenPrintContentShow, setIsKitchenPrintContentShow] = useState(false);
 	const [kitchenPrintContent, setKitchenPrintContent] = useState({});
+	const [isview, setisview] = useState(false);
 	const dispatch = useDispatch();
 
 	/**
@@ -125,6 +126,18 @@ const CurrentOrders = () => {
 		setPrintPreviewContent(previewedData?.[0]);
 		setIsPrintPreviewShow(true);
 	};
+
+	const makeViewDetails = (e,invoice_id)=> {
+		let previewedData = currentOrders.filter((co) => co?.invoice_id === invoice_id);
+		setPrintPreviewContent(previewedData?.[0]);
+		setisview(true)
+		// setisview(false)
+		if(!isview === true) {
+			e.target.classList.add('btn-active')
+		}else {
+			e.target.classList.remove('btn-active')
+		}
+	}
 
 	const makeKitchenPrintToken = (invoiceId) => {
 		let previewedData = currentOrders.filter((co) => co?.invoice_id === invoiceId);
@@ -337,6 +350,15 @@ const CurrentOrders = () => {
 															>
 																Print Token
 															</button>
+															<button
+																type="button"
+																onClick={(e) => {
+																	makeViewDetails(e,co?.invoice_id);
+																}}
+																className="btn btn-sm btn-dark rounded-0"
+															>
+																View
+															</button>
 														</div>
 													) : co?.status === 'payment' ? (
 														<svg
@@ -371,6 +393,182 @@ const CurrentOrders = () => {
 					)}
 				</div>
 				<div className="col-xl-4">
+					{isview && (
+						<div className='preview-area position-relative mt-4' style={{ maxWidth: '350px' }}>
+							<div className="preview-area position-relative mt-4" style={{ maxWidth: '350px' }}>
+								<div id="print-preview" className="border font-monospace rounded p-3" ref={printComponentRef}>
+									<table className="w-100 mb-2">
+										<tbody>
+											<tr>
+												<td className="pb-3 text-center">
+													<img src={companyLogo} alt="logo" className="img-fluid mb-1" style={{ width: '80px' }} />
+													<h5 className="fs-6 fw-normal">Insignia Hotels & Resorts</h5>
+													<h4 style={{color:"#666"}}>[Print Preview]</h4>
+												</td>
+											</tr>
+											<tr>
+												<td className="border-bottom">
+													<h5 className="fs-6 fw-bold border-bottom mb-1">Order Info</h5>
+													<p className="mb-0">Invoice Id : {printPreviewContent?.invoice_id}</p>
+													<p className="mb-0">Table Name : {printPreviewContent?.table_name}</p>
+													<p className="mb-0">
+														Waiter Name : {printPreviewContent?.wf_name} {kitchenPrintContent?.wl_name}
+													</p>
+												</td>
+											</tr>
+											<tr>
+												<td className="pt-2">
+													<h5 className="fs-6 fw-bold border-bottom mb-1">Customer Info</h5>
+													<p className="mb-0">
+														Full Name : {printPreviewContent?.cf_name} {printPreviewContent?.cl_name}
+													</p>
+												</td>
+											</tr>
+											<tr>
+												<td className="pt-2">
+													<table className="table text-start table-sm">
+														<thead style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+															<tr>
+																<th style={{ width: '250px' }}>
+																	<strong className="fw-bold text-nowrap">Item</strong>
+																</th>
+																<th>
+																	<strong className="fw-bold text-nowrap">Qty</strong>
+																</th>
+																<th>
+																	<strong className="fw-bold text-nowrap">Sub Total</strong>
+																</th>
+															</tr>
+														</thead>
+														<tbody>
+															{printPreviewContent.products.map((p) => {
+																return (
+																	<tr key={p.id}>
+																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+																			<span className="d-block fw-bold">{p.item_name}</span>
+																			{p.addon.map((pa, i) => {
+																				return (
+																					<small key={i} className="d-block text-nowrap">
+																						[{pa.addon.name}-{pa.addon.price}]
+																					</small>
+																				);
+																			})}
+																		</td>
+																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>{p.quantity}</td>
+																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+																			{currency_position === 'prefix' && currency_symbol} {p.subtotal_price} {currency_position === 'suffix' && currency_symbol}
+																		</td>
+																	</tr>
+																);
+															})}
+														</tbody>
+														<tfoot className="table-success">
+															<tr>
+																<td></td>
+																<td>Tax</td>
+																<td>
+																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
+																</td>
+															</tr>
+															<tr>
+																<td></td>
+																<td>Service Charge</td>
+																<td>
+																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
+																	{currency_position === 'suffix' && currency_symbol}
+																</td>
+															</tr>
+															<tr>
+																<td></td>
+																<td>Total</td>
+																<td>
+																	{currency_position === 'prefix' && currency_symbol} { printPreviewContent?.trans_total}{' '}
+																	{currency_position === 'suffix' && currency_symbol}
+																</td>
+															</tr>
+															<tr>
+																<td></td>
+																<td>Discount</td>
+																<td>
+																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_discount}{' '}
+																	{currency_position === 'suffix' && currency_symbol}
+																</td>
+															</tr>
+															<tr>
+																<td></td>
+																<td>
+																	<strong>Payable</strong>
+																</td>
+																<td>
+																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_payable}{' '}
+																	{currency_position === 'suffix' && currency_symbol}
+																</td>
+															</tr>
+														</tfoot>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td>
+													<table className="table text-start table-sm">
+														<tbody>
+															<tr>
+																<td className="border-bottom">
+																	<h5 className="fs-6 fw-bold border-bottom mb-1">Guest Copy</h5>
+																	<p className="mb-1">No. : {printPreviewContent?.invoice_id}</p>
+																	<p className="mb-1">Signature : </p>
+																	<p className="mb-1">Name : </p>
+																	{!_.isNil(printPreviewContent?.hc_room) && <p className="mb-1">Room No. : {printPreviewContent?.hc_room}</p>}
+																	<p className="mb-1">Guest/Company Name. : </p>
+																	<p className="mb-0">Guest/Company GST Name : </p>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+								<div className="btn-group d-flex justify-content-center position-absolute end-0 top-0 me-3" style={{ marginTop: '-14px' }} role="group">
+									<button
+										type="button"
+										style={{ width: '30px', height: '30px' }}
+										onClick={() => {
+											handlePrint();
+											setisview(false)
+										}}
+										className="btn btn-sm rounded-circle btn-primary flex-grow-0 p-0"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-printer" viewBox="0 0 16 16">
+											<path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+											<path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+										</svg>
+									</button>
+									<button
+										type="button"
+										style={{ width: '30px', height: '30px' }}
+										onClick={() => {
+											setisview(false)
+											setPrintPreviewContent({});
+											var elems = document.querySelector(".btn-active");
+											if(elems !==null){
+											elems.classList.remove("btn-active");
+											}
+										}}
+										className="btn btn-sm rounded-circle btn-danger flex-grow-0 p-0"
+									>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
+											<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+										</svg>
+									</button>
+								</div>
+							</div>
+						</div>
+					)}
+
 					{isPrintPreviewShow && (
 						<div className="preview-area position-relative mt-4" style={{ maxWidth: '350px' }}>
 							<div id="print-preview" className="border font-monospace rounded p-3" ref={printComponentRef}>
