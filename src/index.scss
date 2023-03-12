@@ -15,7 +15,11 @@ body {
 	}
 }
 .btn-active {
-	background: #f103c9;
+	background: #000;
 	outline: none;
 	border: none;
+}
+.btn-gray {
+	background: #666;
+	color: #fff;
 }

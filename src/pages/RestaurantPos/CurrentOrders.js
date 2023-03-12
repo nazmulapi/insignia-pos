@@ -132,6 +132,7 @@ const CurrentOrders = () => {
 		setPrintPreviewContent(previewedData?.[0]);
 		setisview(true)
 		// setisview(false)
+		
 		if(!isview === true) {
 			e.target.classList.add('btn-active')
 		}else {
