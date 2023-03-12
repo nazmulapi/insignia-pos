@@ -131,8 +131,7 @@ const CurrentOrders = () => {
 		let previewedData = currentOrders.filter((co) => co?.invoice_id === invoice_id);
 		setPrintPreviewContent(previewedData?.[0]);
 		setisview(true)
-
-
+		//typeof invoice_id === undefined && co.invoiceId === invoice_id ? setisview(true):null
 		if(!isview === true) {
 			e.target.classList.add('btn-active')
 		}else {
