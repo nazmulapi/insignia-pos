@@ -189,11 +189,11 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 				if (!_.isUndefined(data)) {
 					if (_.size(data) > 0) {
 						let d = data.map((d) => {
-							const { first_name, last_name } = d;
+							const { first_name } = d;
 							return {
 								...d,
-								value: `${first_name} ${last_name}`,
-								label: `${first_name} ${last_name}`,
+								value: `${first_name}`,
+								label: `${first_name}`,
 							};
 						});
 						setCustomersByCustomerType(d);
@@ -373,7 +373,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 										onChange={(v) => customerNameOnChangeHandler(v)}
 										options={customersByCustomerType}
 									/>
-									<button
+									{/* <button
 										type="button"
 										onClick={() => {
 											setIsNewCustomerModalShow(true);
@@ -381,7 +381,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 										className="btn btn-primary bg-gradient border border-2 border-primary flex-shrink-0"
 									>
 										+
-									</button>
+									</button> */}
 								</div>
 								<Modal
 									show={isNewCustomerModalShow}
@@ -535,7 +535,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						{!_.isUndefined(selectedCustomerName?.first_name) && (
 							<>
 								<small>
-									<strong>Customer Name</strong> : {`${selectedCustomerName?.first_name} ${selectedCustomerName?.last_name}`}
+									<strong>Customer Name</strong> : {`${selectedCustomerName?.first_name}`}
 								</small>
 							</>
 						)}

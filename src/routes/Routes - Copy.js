@@ -37,6 +37,9 @@ const Routes = () => {
 	return (
 		<>
 			<PathWays>
+				<Route path="/" element={<ProtectedRoute />}>
+					<Route path="" element={<Dashboard />} />
+				</Route>
 				{!_.isNil(posAccessPermissions) &&
 					_.size(posAccessPermissions) > 0 &&
 					posAccessPermissions.map((pos_name, index) => {
