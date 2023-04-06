@@ -43,7 +43,10 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 	const [allWaiter, setAllWaiter] = useState([]);
 	const [selectedCustomerType, setSelectedCustomerType] = useState();
 	const [selectedCustomerName, setSelectedCustomerName] = useState();
-	const [selectedTable, setSelectedTable] = useState();
+	const [selectedTable, setSelectedTable] = useState({
+		value: "Table",
+		label: "Table..",
+	});
 	const [selectedWaiter, setSelectedWaiter] = useState();
 	const [invoiceData, setInvoiceData] = useState([]);
 	const [existOrderData, setExistOrderData] = useState();
@@ -51,6 +54,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 	const customerNameRef = useRef();
 	const tableRef = useRef();
 	const waiterRef = useRef();
+	
 
 	/**
 	 * @method {useDispatch}
@@ -77,7 +81,6 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 			setExistOrderData(orderData);
 		}
 	}, [invoiceInfoTableData, orderData]);
-
 	/**
 	 * @method {newCustomerFormOnSubmit}
 	 * @set {}
@@ -292,6 +295,12 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 	 */
 	useEffect(() => {
 		calcTotalAmount();
+		// if(_.size(invoiceData) > 0) {
+		// 		setSelectedTable({
+		// 			value: existOrderData.table_name,
+		// 			label: existOrderData.table_name,
+		// 		})
+		// 	}
 	}, [invoiceData, calcTotalAmount, selectedCustomerType]);
 
 	/**
@@ -482,7 +491,9 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label">
-									Waiter
+									Waiter:{_.size(invoiceData) > 0 && (
+										<strong>{existOrderData.wf_name}</strong>
+								)}
 								</label>
 								<Select
 									ref={waiterRef}
@@ -503,8 +514,10 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						</div>
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
-								<label htmlFor="#" className="mb-1 form-label">
-									Table No.
+								<label htmlFor="#" className="mb-1 form-label d-flex">
+									Table No.{_.size(invoiceData) > 0 && (
+										<strong>{existOrderData.table_name}</strong>
+								)}
 								</label>
 								<Select
 									ref={tableRef}
