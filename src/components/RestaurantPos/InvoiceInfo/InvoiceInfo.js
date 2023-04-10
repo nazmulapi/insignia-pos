@@ -364,7 +364,10 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label">
-									Customer Name
+									Customer Name : 
+									{_.size(existOrderData) > 0 && (
+										<strong>{existOrderData.cf_name+" "+existOrderData.cl_name}</strong>
+									)}
 								</label>
 								<div className="form-group d-flex gap-1 align-items-center">
 									<Select
@@ -491,9 +494,9 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label">
-									Waiter:{_.size(invoiceData) > 0 && (
+									Waiter:{_.size(existOrderData) > 0 && (
 										<strong>{existOrderData.wf_name}</strong>
-								)}
+									)}
 								</label>
 								<Select
 									ref={waiterRef}
@@ -515,9 +518,10 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label d-flex">
-									Table No.{_.size(invoiceData) > 0 && (
-										<strong>{existOrderData.table_name}</strong>
-								)}
+									Table No.
+									{_.size(existOrderData) > 0 && (
+											<strong>{existOrderData.table_name}</strong>
+									)}
 								</label>
 								<Select
 									ref={tableRef}
@@ -600,7 +604,6 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 							</thead>
 							<tbody>
 								{invoiceData.map((pro) => {
-									console.log(pro);
 									let {
 										key,
 										id,

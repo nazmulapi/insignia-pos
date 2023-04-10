@@ -465,7 +465,7 @@ const CurrentOrders = () => {
 														<tfoot className="table-success">
 															<tr>
 																<td></td>
-																<td>Tax</td>
+																<td>Vat</td>
 																<td>
 																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
 																</td>
@@ -639,7 +639,7 @@ const CurrentOrders = () => {
 													<tfoot className="table-success">
 														<tr>
 															<td></td>
-															<td>Tax</td>
+															<td>Vat</td>
 															<td>
 																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
 															</td>
