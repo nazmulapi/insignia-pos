@@ -85,7 +85,7 @@ const Login = () => {
 	 * return {}
 	 */
 	useEffect(() => {
-		//checkTokenByQueryString();
+		checkTokenByQueryString();
 	}, [searchParams]);
 
 	/**
@@ -100,10 +100,9 @@ const Login = () => {
 	 * @check {Redirect}
 	 * desc {}
 	 */
-	// if (!_.isNil(Cookies.get('access_token'))) {
-	// 	return <Navigate to={'/'} />;
-	// }
-
+	if (!_.isNil(Cookies.get('access_token'))) {
+		return <Navigate to={'/'} />;
+	}
 
 	return (
 		<div className="login position-fixed top-0 start-0 w-100 h-100 bg-light d-flex align-items-center justify-content-center">
