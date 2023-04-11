@@ -209,7 +209,7 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 							<div className="col-sm-6 col-xl-4 mb-2 mb-md-0">
 								<div className="overview-widget d-flex align-items-center justify-content-md-end gap-3 mb-1">
 									<p className="mb-0 flex-shrink-0">Vat({taxByPercent}%) :</p>
-									<span style={{ width: '120px' }} className="form-control form-control-sm">
+									<span style={{ width: '120px' }} className="form-control form-control-sm vatStyle">
 										{currency_position === 'prefix' && currency_symbol} {Number(taxChargeAmount).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
 									</span>
 								</div>

@@ -342,7 +342,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label">
-									Customer Type
+									Customer Type:
 								</label>
 								<Select
 									ref={customerTypeRef}

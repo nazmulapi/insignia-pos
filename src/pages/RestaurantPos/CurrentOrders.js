@@ -193,6 +193,8 @@ const CurrentOrders = () => {
 					selected_variant: product?.selected_vairant,
 				};
 			});
+			// console.log(order)
+			// console.log(reArrangeProducts)
 			dispatch({ type: 'EDIT_INVOICE_DATA', payload: { orderData: order, products: reArrangeProducts } });
 			setTimeout(() => navigate('/restaurant-pos'), 100);
 		} catch (error) {
