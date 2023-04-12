@@ -469,7 +469,7 @@ const CurrentOrders = () => {
 																<td></td>
 																<td>Vat</td>
 																<td>
-																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
+																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax + "%"} {currency_position === 'suffix' && currency_symbol}
 																</td>
 															</tr>
 															<tr>
@@ -643,7 +643,7 @@ const CurrentOrders = () => {
 															<td></td>
 															<td>Vat</td>
 															<td>
-																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
+																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax + "%"} {currency_position === 'suffix' && currency_symbol}
 															</td>
 														</tr>
 														<tr>
