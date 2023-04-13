@@ -467,14 +467,15 @@ const CurrentOrders = () => {
 														<tfoot className="table-success">
 															<tr>
 																<td></td>
-																<td>Vat</td>
+																<td>Vat(15%)</td>
 																<td>
-																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax + "%"} {currency_position === 'suffix' && currency_symbol}
+																	{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
+																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) * printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
 																</td>
 															</tr>
 															<tr>
 																<td></td>
-																<td>Service Charge</td>
+																<td>Service Charge(10%)</td>
 																<td>
 																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
 																	{currency_position === 'suffix' && currency_symbol}
@@ -641,14 +642,14 @@ const CurrentOrders = () => {
 													<tfoot className="table-success">
 														<tr>
 															<td></td>
-															<td>Vat</td>
+															<td>Vat(15%)</td>
 															<td>
-																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax + "%"} {currency_position === 'suffix' && currency_symbol}
+																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
 															</td>
 														</tr>
 														<tr>
 															<td></td>
-															<td>Service Charge</td>
+															<td>Service Charge(10%)</td>
 															<td>
 																{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
 																{currency_position === 'suffix' && currency_symbol}

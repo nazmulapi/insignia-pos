@@ -9,8 +9,8 @@ const axios = require('axios');
 const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, customerName, waiterName, tableName }) => {
 	const [scannerBeepsSoundPlay] = useSound(scannerBeepsSound);
 	const [grandTotalAmount, setGrandTotalAmount] = useState(0);
-	const [taxByPercent, setTaxByPercent] = useState(0);
-	const [serviceChargeByPercent, setServiceChargeByPercent] = useState(0);
+	const [taxByPercent, setTaxByPercent] = useState(15);
+	const [serviceChargeByPercent, setServiceChargeByPercent] = useState(10);
 	const [taxChargeAmount, setTaxChargeAmount] = useState(0);
 	const [serviceChargeAmount, setServiceChargeAmount] = useState(0);
 	const [isButtonsDisable, setIsButtonsDisable] = useState(true);
@@ -31,7 +31,7 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 		if (!_.isNil(orderData)) {
 			let { trans_service, trans_tax } = orderData;
 			setServiceChargeByPercent(trans_service);
-			setTaxByPercent(15);
+			setTaxByPercent(trans_tax);
 		}
 	}, [orderData]);
 
@@ -96,7 +96,7 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 			data: ordersData,
 		})
 			.then((response) => {
-				console.log(response);
+				//console.log(response);
 				const { status, message } = response?.data;
 				if (status === true) {
 					toast.success(message || 'Order & Payment Saved Successfully !', {
@@ -143,6 +143,7 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 
 		if (status === 'order') sendInvoiceDetailsToOrder(grandTotalObj);
 		if (status === 'payment') makePayment(grandTotalObj);
+		//console.log(grandTotalObj)
 	};
 
 	/**
@@ -214,7 +215,7 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 									</span>
 								</div>
 								<div className="overview-widget d-flex align-items-center justify-content-md-end gap-3">
-									<p className="mb-0 flex-shrink-0">Service Charge(%) :</p>
+									<p className="mb-0 flex-shrink-0">Service Charge(10%) :</p>
 									<input
 										type="number"
 										className="form-control form-control-sm"
