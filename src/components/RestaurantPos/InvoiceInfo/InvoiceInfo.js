@@ -43,10 +43,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 	const [allWaiter, setAllWaiter] = useState([]);
 	const [selectedCustomerType, setSelectedCustomerType] = useState();
 	const [selectedCustomerName, setSelectedCustomerName] = useState();
-	const [selectedTable, setSelectedTable] = useState({
-		value: "Table",
-		label: "Table..",
-	});
+	const [selectedTable, setSelectedTable] = useState();
 	const [selectedWaiter, setSelectedWaiter] = useState();
 	const [invoiceData, setInvoiceData] = useState([]);
 	const [existOrderData, setExistOrderData] = useState();
@@ -69,18 +66,40 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 	 */
 	const invoiceInfoTableData = useSelector((reduxStore) => reduxStore?.InvoiceInfoTableReducer?.invoiceTableData);
 	const orderData = useSelector((reduxStore) => reduxStore?.InvoiceInfoTableReducer?.orderData);
-
+	
 	/**
 	 * @method {componentDidUpdate by reduxStore}
 	 * @param  {} => invoiceInfoTableData
 	 * To get the invoiceInfoTableData
 	 */
+
 	useEffect(() => {
 		setInvoiceData(invoiceInfoTableData);
 		if (!_.isNil(orderData)) {
 			setExistOrderData(orderData);
 		}
 	}, [invoiceInfoTableData, orderData]);
+
+	useEffect(()=>{
+		setSelectedTable(
+			{
+				table_id: existOrderData?.table_id,
+				table_name: existOrderData?.table_name,
+				value: existOrderData?.table_name,
+				label: existOrderData?.table_name,
+			}
+		)
+		// setSelectedWaiter(
+		// 	{
+		// 		table_id: existOrderData?.waiter_id,
+		// 		table_name: existOrderData?.wf_name,
+		// 		value: existOrderData?.wf_name,
+		// 		label: existOrderData?.wf_name,
+		// 	}
+		// )
+	},[existOrderData])
+
+
 	/**
 	 * @method {newCustomerFormOnSubmit}
 	 * @set {}
@@ -295,13 +314,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 	 */
 	useEffect(() => {
 		calcTotalAmount();
-		// if(_.size(invoiceData) > 0) {
-		// 		setSelectedTable({
-		// 			value: existOrderData.table_name,
-		// 			label: existOrderData.table_name,
-		// 		})
-		// 	}
-	}, [invoiceData, calcTotalAmount, selectedCustomerType]);
+	}, [invoiceData, calcTotalAmount, selectedTable]);
 
 	/**
 	 * useSelector
@@ -329,6 +342,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 		getAllWaiter();
 	}, []);
 
+	
 	return (
 		<>
 			<div className="invoice-info">
@@ -494,10 +508,9 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label">
-									Waiter:{_.size(existOrderData) > 0 && (
-										<strong>{existOrderData.wf_name}</strong>
-									)}
+									Waiter:
 								</label>
+
 								<Select
 									ref={waiterRef}
 									placeholder="Waiter ..."
@@ -518,11 +531,13 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 						<div className="col-xl-6">
 							<div className="form-group mb-2">
 								<label htmlFor="#" className="mb-1 form-label d-flex">
-									Table No.
-									{_.size(existOrderData) > 0 && (
+									{/* Table No.<strong>{selectedTable?.table_name}</strong> */}
+									Table No.<strong>{selectedTable?.table_name}</strong>
+									{/* {_.size(existOrderData) > 0 && (
 											<strong>{existOrderData.table_name}</strong>
-									)}
+									)} */}
 								</label>
+
 								<Select
 									ref={tableRef}
 									placeholder="Table ..."
@@ -535,7 +550,9 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 									isSearchable={true}
 									name="table"
 									value={selectedTable}
-									onChange={(v) => setSelectedTable(v)}
+									onChange={(v) => {
+										setSelectedTable(v)
+									}}
 									options={allTables}
 								/>
 							</div>
