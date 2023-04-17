@@ -398,7 +398,7 @@ const CurrentOrders = () => {
 					{isview && (
 						<div className='preview-area position-relative mt-4' style={{ maxWidth: '350px' }}>
 							<div className="preview-area position-relative mt-4" style={{ maxWidth: '350px' }}>
-								<div id="print-preview" className="border font-monospace rounded p-3" ref={printComponentRef}>
+								<div id="print-preview" className="border font-monospace rounded p-0" ref={printComponentRef}>
 									<table className="w-100 mb-2">
 										<tbody>
 											<tr>
@@ -422,7 +422,7 @@ const CurrentOrders = () => {
 												<td className="pt-2">
 													<h5 className="fs-6 fw-bold border-bottom mb-1">Customer Info</h5>
 													<p className="mb-0">
-														Full Name : {printPreviewContent?.cf_name} {printPreviewContent?.cl_name}
+														Full Name : {printPreviewContent?.cf_name}
 													</p>
 												</td>
 											</tr>
@@ -431,7 +431,7 @@ const CurrentOrders = () => {
 													<table className="table text-start table-sm">
 														<thead style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
 															<tr>
-																<th style={{ width: '250px' }}>
+																<th style={{ width: '270px' }}>
 																	<strong className="fw-bold text-nowrap">Item</strong>
 																</th>
 																<th>
@@ -446,7 +446,7 @@ const CurrentOrders = () => {
 															{printPreviewContent.products.map((p) => {
 																return (
 																	<tr key={p.id}>
-																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
 																			<span className="d-block fw-bold">{p.item_name}</span>
 																			{p.addon.map((pa, i) => {
 																				return (
@@ -456,8 +456,8 @@ const CurrentOrders = () => {
 																				);
 																			})}
 																		</td>
-																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>{p.quantity}</td>
-																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>{p.quantity}</td>
+																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
 																			{currency_position === 'prefix' && currency_symbol} {p.subtotal_price} {currency_position === 'suffix' && currency_symbol}
 																		</td>
 																	</tr>
@@ -465,44 +465,44 @@ const CurrentOrders = () => {
 															})}
 														</tbody>
 														<tfoot className="table-success">
-															<tr>
-																<td></td>
-																<td>Vat(15%)</td>
-																<td>
+															<tr className='py-0'>
+																{/* <td></td> */}
+																<td colSpan="2"  className='py-0'>Vat(15%)</td>
+																<td className='py-0'>
 																	{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
 																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) * printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
 																</td>
 															</tr>
 															<tr>
-																<td></td>
-																<td>Service Charge(10%)</td>
-																<td>
+																{/* <td></td> */}
+																<td colSpan='2' className='py-0'>Service Charge (10%)</td>
+																<td className='py-0'>
 																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
 																	{currency_position === 'suffix' && currency_symbol}
 																</td>
 															</tr>
 															<tr>
-																<td></td>
-																<td>Total</td>
-																<td>
+																{/* <td></td> */}
+																<td colSpan='2' className='py-0'>Total</td>
+																<td className='py-0'>
 																	{currency_position === 'prefix' && currency_symbol} { printPreviewContent?.trans_total}{' '}
 																	{currency_position === 'suffix' && currency_symbol}
 																</td>
 															</tr>
 															<tr>
-																<td></td>
-																<td>Discount</td>
-																<td>
+																{/* <td></td> */}
+																<td colSpan='2' className='py-0'>Discount</td>
+																<td className='py-0'>
 																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_discount}{' '}
 																	{currency_position === 'suffix' && currency_symbol}
 																</td>
 															</tr>
 															<tr>
-																<td></td>
-																<td>
+																{/* <td></td> */}
+																<td colSpan='2' className='py-0'>
 																	<strong>Payable</strong>
 																</td>
-																<td>
+																<td className='py-0'>
 																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_payable}{' '}
 																	{currency_position === 'suffix' && currency_symbol}
 																</td>
@@ -574,7 +574,7 @@ const CurrentOrders = () => {
 
 					{isPrintPreviewShow && (
 						<div className="preview-area position-relative mt-4" style={{ maxWidth: '350px' }}>
-							<div id="print-preview" className="border font-monospace rounded p-3" ref={printComponentRef}>
+							<div id="print-preview" className="border font-monospace rounded p-0" ref={printComponentRef}>
 								<table className="w-100 mb-2">
 									<tbody>
 										<tr>
@@ -597,7 +597,7 @@ const CurrentOrders = () => {
 											<td className="pt-2">
 												<h5 className="fs-6 fw-bold border-bottom mb-1">Customer Info</h5>
 												<p className="mb-0">
-													Full Name : {printPreviewContent?.cf_name} {printPreviewContent?.cl_name}
+													Full Name : {printPreviewContent?.cf_name}
 												</p>
 											</td>
 										</tr>
@@ -606,7 +606,7 @@ const CurrentOrders = () => {
 												<table className="table text-start table-sm">
 													<thead style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
 														<tr>
-															<th style={{ width: '250px' }}>
+															<th style={{ width: '270px' }}>
 																<strong className="fw-bold text-nowrap">Item</strong>
 															</th>
 															<th>
@@ -621,7 +621,7 @@ const CurrentOrders = () => {
 														{printPreviewContent.products.map((p) => {
 															return (
 																<tr key={p.id}>
-																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
 																		<span className="d-block fw-bold">{p.item_name}</span>
 																		{p.addon.map((pa, i) => {
 																			return (
@@ -631,8 +631,8 @@ const CurrentOrders = () => {
 																			);
 																		})}
 																	</td>
-																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>{p.quantity}</td>
-																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
+																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>{p.quantity}</td>
+																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
 																		{currency_position === 'prefix' && currency_symbol} {p.subtotal_price} {currency_position === 'suffix' && currency_symbol}
 																	</td>
 																</tr>
@@ -641,42 +641,42 @@ const CurrentOrders = () => {
 													</tbody>
 													<tfoot className="table-success">
 														<tr>
-															<td></td>
-															<td>Vat(15%)</td>
-															<td>
-																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol}
+															{/* <td></td> */}
+															<td colSpan="2" className='py-0'>Vat(15%)</td>
+															<td className='py-0'>
+															{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) * printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
 															</td>
 														</tr>
 														<tr>
-															<td></td>
-															<td>Service Charge(10%)</td>
-															<td>
+															{/* <td></td> */}
+															<td colSpan="2" className='py-0'>Service Charge (10%)</td>
+															<td className='py-0'>
 																{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
 																{currency_position === 'suffix' && currency_symbol}
 															</td>
 														</tr>
 														<tr>
-															<td></td>
-															<td>Total</td>
-															<td>
+															{/* <td></td> */}
+															<td colSpan="2" className='py-0'>Total</td>
+															<td className='py-0'>
 																{currency_position === 'prefix' && currency_symbol} { printPreviewContent?.trans_total}{' '}
 																{currency_position === 'suffix' && currency_symbol}
 															</td>
 														</tr>
 														<tr>
-															<td></td>
-															<td>Discount</td>
-															<td>
+															{/* <td></td> */}
+															<td colSpan="2" className='py-0'>Discount</td>
+															<td className='py-0'>
 																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_discount}{' '}
 																{currency_position === 'suffix' && currency_symbol}
 															</td>
 														</tr>
 														<tr>
-															<td></td>
-															<td>
+															{/* <td></td> */}
+															<td colSpan="2" className='py-0'>
 																<strong>Payable</strong>
 															</td>
-															<td>
+															<td className='py-0'>
 																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_payable}{' '}
 																{currency_position === 'suffix' && currency_symbol}
 															</td>
@@ -744,7 +744,7 @@ const CurrentOrders = () => {
 
 					{isKitchenPrintContentShow && (
 						<div className="kitchen-print-token-preview-area d-none mt-4" style={{ maxWidth: '350px' }}>
-							<div id="kitchen-print-token-preview" ref={kitchenPrintComponentRef} className="border font-monospace rounded p-3">
+							<div id="kitchen-print-token-preview" ref={kitchenPrintComponentRef} className="border font-monospace rounded p-2">
 								<table className="w-100 mb-2">
 									<tbody>
 										<tr>
