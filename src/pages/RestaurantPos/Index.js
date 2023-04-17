@@ -149,6 +149,7 @@ const RestaurantPos = () => {
 	 * return {}
 	 */
 	const searchCategoryOnChangeHandler = async (searchValue) => {
+		// console.table(searchValue)
 		let id = searchValue?.value?.id;
 		if (!_.isUndefined(id)) {
 			try {
