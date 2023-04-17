@@ -61,6 +61,7 @@ const Login = () => {
 						let { login_token } = user;
 						goNextWithLogin(user, login_token, message);
 						window.location.href = "http://pos.insignia-resorts.com/"
+						console.log('redirect..')
 					} else {
 						let { message } = result?.data;
 						toast.error(message || 'Authentication Failed', {
