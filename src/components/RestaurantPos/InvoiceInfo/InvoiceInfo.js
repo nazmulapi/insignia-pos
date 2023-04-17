@@ -88,20 +88,6 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
     }
   }, [invoiceInfoTableData, orderData]);
 
-  useEffect(() => {
-    setSelectedTable({
-      table_id: existOrderData?.table_id,
-      table_name: existOrderData?.table_name,
-      value: existOrderData?.table_name,
-      label: existOrderData?.table_name,
-    });
-    setSelectedWaiter({
-			...selectedWaiter,
-      value: existOrderData?.wf_name,
-      label: existOrderData?.wf_name,
-    });
-  }, [existOrderData]);
-
   /**
    * @method {newCustomerFormOnSubmit}
    * @set {}
@@ -309,6 +295,34 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
       console.log(error);
     }
   };
+
+  // console.log(selectedWaiter)
+  // console.log('====')
+  // console.log(selectedTable)
+  // console.log('==+++==')
+  // console.log(existOrderData)
+
+  useEffect(() => {
+    setSelectedTable({
+      table_id: existOrderData?.table_id,
+      table_name: existOrderData?.table_name,
+      value: existOrderData?.table_name,
+      label: existOrderData?.table_name,
+    });
+    setSelectedWaiter({
+      email:existOrderData?.email,
+      emp_his_id:existOrderData?.id,
+      first_name: existOrderData?.wf_name, 
+      middle_name: '', 
+      last_name: '',
+      value: existOrderData?.wf_name,
+      label: existOrderData?.wf_name,
+    });
+  }, [existOrderData]);
+
+
+
+
 
   /**
    * @method - Remove Invoice Data
