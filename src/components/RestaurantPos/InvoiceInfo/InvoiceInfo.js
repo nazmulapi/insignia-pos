@@ -302,6 +302,10 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
   // console.log('==+++==')
   // console.log(existOrderData)
 
+  // console.log(selectedCustomerType)
+  // console.log(selectedCustomerName)
+  // console.log(existOrderData)
+
   useEffect(() => {
     setSelectedTable({
       table_id: existOrderData?.table_id,
@@ -318,6 +322,12 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
       value: existOrderData?.wf_name,
       label: existOrderData?.wf_name,
     });
+    // setSelectedCustomerType({
+    //   id: existOrderData?.type_id,
+    //   value: existOrderData.type_id === 4 ? "hotel":"reservation"
+    //   apiKeyWord: existOrderData.type_id === 4 ? "hotel":"reservation"
+    //   label: existOrderData.type_id === 4 ? "Hotel Customer" : "Reservation Customer"
+    // })
 
   }, [existOrderData]);
 
