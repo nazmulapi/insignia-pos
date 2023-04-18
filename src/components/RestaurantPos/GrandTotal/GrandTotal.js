@@ -277,7 +277,7 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 								onClick={() => {
 									makeOrder('order');
 									dispatch({ type: 'REMOVE_ALL_INVOICE_DATA' });
-									setTimeout(() => window.location.reload(), 100);
+									//setTimeout(() => window.location.reload(), 100);
 								}}
 								className="btn btn-sm btn-warning rounded-0"
 							>
