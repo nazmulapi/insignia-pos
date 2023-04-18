@@ -297,14 +297,8 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
   };
 
   // console.log(selectedWaiter)
-  // console.log('====')
-  // console.log(selectedTable)
-  // console.log('==+++==')
   // console.log(existOrderData)
-
   // console.log(selectedCustomerType)
-  // console.log(selectedCustomerName)
-  // console.log(existOrderData)
 
   useEffect(() => {
     setSelectedTable({
@@ -322,12 +316,21 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
       value: existOrderData?.wf_name,
       label: existOrderData?.wf_name,
     });
-    // setSelectedCustomerType({
-    //   id: existOrderData?.type_id,
-    //   value: existOrderData.type_id === 4 ? "hotel":"reservation"
-    //   apiKeyWord: existOrderData.type_id === 4 ? "hotel":"reservation"
-    //   label: existOrderData.type_id === 4 ? "Hotel Customer" : "Reservation Customer"
-    // })
+    setSelectedCustomerName({
+      customer_id: existOrderData?.customer_id,
+      first_name: existOrderData?.cf_name,
+      last_name:existOrderData?.cl_name,
+      email:existOrderData?.email,
+      cust_phone:existOrderData?.cust_phone,
+      value:existOrderData?.cf_name,
+      label:existOrderData?.cf_name,
+    })
+    setSelectedCustomerType({
+      id: existOrderData?.type_id,
+      value: existOrderData?.type_id == 6 ? "reservation" :"hotel",
+      apiKeyWord: existOrderData?.type_id == 6 ? "reservation" :"hotel",
+      label: existOrderData?.type_id == 6 ? "Reservation Customer" :"Hotel Customer",
+    })
 
   }, [existOrderData]);
 
@@ -422,7 +425,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
                   Customer Name :
                   {_.size(existOrderData) > 0 && (
                     <strong>
-                      {existOrderData.cf_name + " " + existOrderData.cl_name}
+                      {existOrderData.cf_name}
                     </strong>
                   )}
                 </label>
