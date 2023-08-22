@@ -1,0 +1,14 @@
+I use BrowserRouting from the react-router-dom package. I am running on a Nginx server and adding the following to /etc/nginx/yourconfig.conf solved it for me:
+
+location / {
+  if (!-e $request_filename){
+    rewrite ^(.*)$ /index.html break;
+  }
+}
+Which corresponds to adding the following to the .htaccess in case you are running Apache:
+
+Options -MultiViews
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [QSA,L]
+This also seems to be the solution suggested by Facebook themselves and can be found here.
