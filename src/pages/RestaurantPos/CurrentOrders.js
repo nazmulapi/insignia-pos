@@ -124,12 +124,14 @@ const CurrentOrders = () => {
 	const makePrintPreview = (invoiceId) => {
 		let previewedData = currentOrders.filter((co) => co?.invoice_id === invoiceId);
 		setPrintPreviewContent(previewedData?.[0]);
+		setisview(false);
 		setIsPrintPreviewShow(true);
 	};
 
 	const makeViewDetails = (e,invoice_id)=> {
 		let previewedData = currentOrders.filter((co) => co?.invoice_id === invoice_id);
 		setPrintPreviewContent(previewedData?.[0]);
+		setIsPrintPreviewShow(false);
 		setisview(true)
 		//typeof invoice_id === undefined && co.invoiceId === invoice_id ? setisview(true):null
 		if(!isview === true) {
@@ -398,39 +400,41 @@ const CurrentOrders = () => {
 					{isview && (
 						<div className='preview-area position-relative mt-4' style={{ maxWidth: '350px' }}>
 							<div className="preview-area position-relative mt-4" style={{ maxWidth: '350px' }}>
-								<div id="print-preview" className="border font-monospace rounded p-0" ref={printComponentRef}>
+								<div id="print-preview" className="border font-monospace rounded pos-table" ref={printComponentRef}>
 									<table className="w-100 mb-2">
-										<tbody>
+										<tbody className="text-pos">
 											<tr>
-												<td className="pb-3 text-center">
-													<img src={companyLogo} alt="logo" className="img-fluid mb-1" style={{ width: '80px' }} />
+												<td className="text-center">
+													<img src={companyLogo} alt="logo" className="img-fluid mb-1 mt-2" style={{ width: '80px' }} />
 													<h5 className="fs-6 fw-normal">Insignia Hotels & Resorts</h5>
 													<h4 style={{color:"#666"}}>[Print Preview]</h4>
 												</td>
 											</tr>
 											<tr>
-												<td className="border-bottom">
-													<h5 className="fs-6 fw-bold border-bottom mb-1">Order Info</h5>
-													<p className="mb-0">Invoice Id : {printPreviewContent?.invoice_id}</p>
-													<p className="mb-0">Table Name : {printPreviewContent?.table_name}</p>
-													<p className="mb-0">
-														Waiter Name : {printPreviewContent?.wf_name} {kitchenPrintContent?.wl_name}
+												<td>
+													<h5 className="fs-6 fw-bold p-1 m-0">Order Info</h5>
+													<div className="p-1 pos-border-top pos-border-bottom">
+														<p className="mb-0">Invoice Id : {printPreviewContent?.invoice_id}</p>
+														<p className="mb-0">Table Name : {printPreviewContent?.table_name}</p>
+														<p className="mb-0">
+															Waiter Name : {printPreviewContent?.wf_name} {kitchenPrintContent?.wl_name}
+														</p>
+													</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<h5 className="fs-6 fw-bold p-1 m-0 pt-0">Customer Info</h5>
+													<p className="mb-0  px-1 pos-border-bottom pos-border-top">
+														Full Name : {printPreviewContent?.cf_name + " " + printPreviewContent?.cl_name}
 													</p>
 												</td>
 											</tr>
 											<tr>
-												<td className="pt-2">
-													<h5 className="fs-6 fw-bold border-bottom mb-1">Customer Info</h5>
-													<p className="mb-0">
-														Full Name : {printPreviewContent?.cf_name}
-													</p>
-												</td>
-											</tr>
-											<tr>
-												<td className="pt-2">
-													<table className="table text-start table-sm">
-														<thead style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
-															<tr>
+												<td>
+													<table className="table text-start table-sm m-0">
+														<thead>
+															<tr className='pos-border-bottom'>
 																<th style={{ width: '270px' }}>
 																	<strong className="fw-bold text-nowrap">Item</strong>
 																</th>
@@ -445,9 +449,9 @@ const CurrentOrders = () => {
 														<tbody>
 															{printPreviewContent.products.map((p) => {
 																return (
-																	<tr key={p.id}>
-																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
-																			<span className="d-block fw-bold">{p.item_name}</span>
+																	<tr key={p.id} className='pos-border-bottom'>
+																		<td className='py-0'>
+																			<span className="d-block">{p.item_name}</span>
 																			{p.addon.map((pa, i) => {
 																				return (
 																					<small key={i} className="d-block text-nowrap">
@@ -456,55 +460,70 @@ const CurrentOrders = () => {
 																				);
 																			})}
 																		</td>
-																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>{p.quantity}</td>
-																		<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
+																		<td className='py-0'>{p.quantity}</td>
+																		<td className='py-0'>
 																			{currency_position === 'prefix' && currency_symbol} {p.subtotal_price} {currency_position === 'suffix' && currency_symbol}
 																		</td>
 																	</tr>
 																);
 															})}
 														</tbody>
-														<tfoot className="table-success">
-															<tr className='py-0'>
+														<tfoot>
+															<tr className='pos-border-bottom'>
 																{/* <td></td> */}
-																<td colSpan="2"  className='py-0'>Vat(15%)</td>
+																<td colSpan='2' className='py-0'><strong>Total</strong></td>
 																<td className='py-0'>
-																	{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
-																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) * printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
-																</td>
-															</tr>
-															<tr>
-																{/* <td></td> */}
-																<td colSpan='2' className='py-0'>Service Charge (10%)</td>
-																<td className='py-0'>
-																	{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
-																	{currency_position === 'suffix' && currency_symbol}
-																</td>
-															</tr>
-															<tr>
-																{/* <td></td> */}
-																<td colSpan='2' className='py-0'>Total</td>
-																<td className='py-0'>
+																	<strong>
 																	{currency_position === 'prefix' && currency_symbol} { printPreviewContent?.trans_total}{' '}
 																	{currency_position === 'suffix' && currency_symbol}
+																	</strong>
 																</td>
 															</tr>
-															<tr>
+															<tr className='pos-border-bottom'>
 																{/* <td></td> */}
+																<td colSpan='2' className='py-0'>SC (10%, Excluding Beverage Products)</td>
+																<td className='py-0'>
+																	{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_service).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
+																	{/* {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)} */}
+																</td>
+															</tr>
+															<tr className='pos-border-bottom'>
+																{/* <td></td> */}
+																<td colSpan='2' className='py-0'>
+																	<strong>Sub Total</strong>
+																</td>
+																<td className='py-0'>
+																<strong>
+																	{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_total) + Number((printPreviewContent?.trans_service).toFixed(2))}{' '}
+																	{currency_position === 'suffix' && currency_symbol}
+																	</strong>
+																</td>
+															</tr>
+															<tr className='py-0 pos-border-bottom'>
+																{/* <td></td> */}
+																<td colSpan="2"  className='py-0'>Vat(15%, Excluding Beverage Products)</td>
+																<td className='py-0'>
+																	{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
+																	{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
+																</td>
+															</tr>
+															{/* <tr>
 																<td colSpan='2' className='py-0'>Discount</td>
 																<td className='py-0'>
 																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_discount}{' '}
 																	{currency_position === 'suffix' && currency_symbol}
 																</td>
-															</tr>
+															</tr> */}
 															<tr>
 																{/* <td></td> */}
 																<td colSpan='2' className='py-0'>
-																	<strong>Payable</strong>
+																	<strong>Total Amount Payable</strong>
 																</td>
 																<td className='py-0'>
+																	<strong>
 																	{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_payable}{' '}
 																	{currency_position === 'suffix' && currency_symbol}
+																	</strong>
 																</td>
 															</tr>
 														</tfoot>
@@ -512,20 +531,47 @@ const CurrentOrders = () => {
 												</td>
 											</tr>
 										</tbody>
-										<tfoot>
+										<tfoot className='pos-border-top'>
 											<tr>
 												<td>
-													<table className="table text-start table-sm">
+													<table className="table text-start table-sm m-0">
 														<tbody>
 															<tr>
-																<td className="border-bottom">
-																	<h5 className="fs-6 fw-bold border-bottom mb-1">Guest Copy</h5>
-																	<p className="mb-1">No. : {printPreviewContent?.invoice_id}</p>
-																	<p className="mb-1">Signature : </p>
-																	<p className="mb-1">Name : </p>
-																	{!_.isNil(printPreviewContent?.hc_room) && <p className="mb-1">Room No. : {printPreviewContent?.hc_room}</p>}
-																	<p className="mb-1">Guest/Company Name. : </p>
-																	<p className="mb-0">Guest/Company GST Name : </p>
+																<td className='border-top pos-bottom p-1 py-3 pb-4'>
+																	<div className="pos-btm-wrap">
+																		<div className="pos-btm-left">
+																			<p className="mb-1">No. {printPreviewContent?.invoice_id}</p>
+																		</div>
+																		<div className="pos-btm-right">
+																			<h5 className="fs-6 fw-bold">Guest Copy</h5>
+																		</div>
+																	</div>
+
+																	<p className="mb-1">Name </p>
+
+																	<div className="pos-btm-wrap">
+																		<div className="pos-btm-left">
+																			{!_.isNil(printPreviewContent?.hc_room) && <p className="mb-1">Room No. {printPreviewContent?.hc_room}</p>}
+																		</div>
+																		<div className="pos-btm-right">
+																			<h5 className="fs-6 fw-bold">Signature</h5>
+																		</div>
+																	</div>
+
+																	<div className="pos-btm-line">
+																		<span>Guest/Company Name</span>
+																	</div>
+
+																	<div className="pos-btm-line">
+																		<span>Guest/Company GST No</span>
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<td className='p-0'>
+																	<p className='pos-border-top pt-2 pb-1 m-0 text-center'>
+																		System Generated Invoice
+																	</p>
 																</td>
 															</tr>
 														</tbody>
@@ -573,39 +619,42 @@ const CurrentOrders = () => {
 					)}
 
 					{isPrintPreviewShow && (
+						<div className='preview-area position-relative mt-4' style={{ maxWidth: '350px' }}>
 						<div className="preview-area position-relative mt-4" style={{ maxWidth: '350px' }}>
-							<div id="print-preview" className="border font-monospace rounded p-0" ref={printComponentRef}>
+							<div id="print-preview" className="border font-monospace rounded pos-table" ref={printComponentRef}>
 								<table className="w-100 mb-2">
-									<tbody>
+									<tbody className="text-pos">
 										<tr>
-											<td className="pb-3 text-center">
-												<img src={companyLogo} alt="logo" className="img-fluid mb-1" style={{ width: '80px' }} />
+											<td className="text-center">
+												<img src={companyLogo} alt="logo" className="img-fluid mb-1 mt-2" style={{ width: '80px' }} />
 												<h5 className="fs-6 fw-normal">Insignia Hotels & Resorts</h5>
 											</td>
 										</tr>
 										<tr>
-											<td className="border-bottom">
-												<h5 className="fs-6 fw-bold border-bottom mb-1">Order Info</h5>
-												<p className="mb-0">Invoice Id : {printPreviewContent?.invoice_id}</p>
-												<p className="mb-0">Table Name : {printPreviewContent?.table_name}</p>
-												<p className="mb-0">
-													Waiter Name : {printPreviewContent?.wf_name} {kitchenPrintContent?.wl_name}
+											<td>
+												<h5 className="fs-6 fw-bold p-1 m-0">Order Info</h5>
+												<div className="p-1 pos-border-top pos-border-bottom">
+													<p className="mb-0">Invoice Id : {printPreviewContent?.invoice_id}</p>
+													<p className="mb-0">Table Name : {printPreviewContent?.table_name}</p>
+													<p className="mb-0">
+														Waiter Name : {printPreviewContent?.wf_name} {kitchenPrintContent?.wl_name}
+													</p>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h5 className="fs-6 fw-bold p-1 m-0 pt-0">Customer Info</h5>
+												<p className="mb-0  px-1 pos-border-bottom pos-border-top">
+													Full Name : {printPreviewContent?.cf_name + " " + printPreviewContent?.cl_name}
 												</p>
 											</td>
 										</tr>
 										<tr>
-											<td className="pt-2">
-												<h5 className="fs-6 fw-bold border-bottom mb-1">Customer Info</h5>
-												<p className="mb-0">
-													Full Name : {printPreviewContent?.cf_name}
-												</p>
-											</td>
-										</tr>
-										<tr>
-											<td className="pt-2">
-												<table className="table text-start table-sm">
-													<thead style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }}>
-														<tr>
+											<td>
+												<table className="table text-start table-sm m-0">
+													<thead>
+														<tr className='pos-border-bottom'>
 															<th style={{ width: '270px' }}>
 																<strong className="fw-bold text-nowrap">Item</strong>
 															</th>
@@ -620,9 +669,9 @@ const CurrentOrders = () => {
 													<tbody>
 														{printPreviewContent.products.map((p) => {
 															return (
-																<tr key={p.id}>
-																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
-																		<span className="d-block fw-bold">{p.item_name}</span>
+																<tr key={p.id} className='pos-border-bottom'>
+																	<td className='py-0'>
+																		<span className="d-block">{p.item_name}</span>
 																		{p.addon.map((pa, i) => {
 																			return (
 																				<small key={i} className="d-block text-nowrap">
@@ -631,54 +680,70 @@ const CurrentOrders = () => {
 																			);
 																		})}
 																	</td>
-																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>{p.quantity}</td>
-																	<td style={{ borderBottom: '1px solid rgba(0,0,0,.3)' }} className='py-0'>
+																	<td className='py-0'>{p.quantity}</td>
+																	<td className='py-0'>
 																		{currency_position === 'prefix' && currency_symbol} {p.subtotal_price} {currency_position === 'suffix' && currency_symbol}
 																	</td>
 																</tr>
 															);
 														})}
 													</tbody>
-													<tfoot className="table-success">
-														<tr>
+													<tfoot>
+														<tr className='pos-border-bottom'>
 															{/* <td></td> */}
-															<td colSpan="2" className='py-0'>Vat(15%)</td>
+															<td colSpan='2' className='py-0'><strong>Total</strong></td>
 															<td className='py-0'>
-															{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) * printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
-															</td>
-														</tr>
-														<tr>
-															{/* <td></td> */}
-															<td colSpan="2" className='py-0'>Service Charge (10%)</td>
-															<td className='py-0'>
-																{currency_position === 'prefix' && currency_symbol} {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)}
-																{currency_position === 'suffix' && currency_symbol}
-															</td>
-														</tr>
-														<tr>
-															{/* <td></td> */}
-															<td colSpan="2" className='py-0'>Total</td>
-															<td className='py-0'>
+																<strong>
 																{currency_position === 'prefix' && currency_symbol} { printPreviewContent?.trans_total}{' '}
 																{currency_position === 'suffix' && currency_symbol}
+																</strong>
 															</td>
 														</tr>
-														<tr>
+														<tr className='pos-border-bottom'>
 															{/* <td></td> */}
-															<td colSpan="2" className='py-0'>Discount</td>
+															<td colSpan='2' className='py-0'>SC (10%, Excluding Beverage Products)</td>
+															<td className='py-0'>
+																{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_service).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
+																{/* {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)} */}
+															</td>
+														</tr>
+														<tr className='pos-border-bottom'>
+															{/* <td></td> */}
+															<td colSpan='2' className='py-0'>
+																<strong>Sub Total</strong>
+															</td>
+															<td className='py-0'>
+															<strong>
+																{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_total) + Number((printPreviewContent?.trans_service).toFixed(2))}{' '}
+																{currency_position === 'suffix' && currency_symbol}
+																</strong>
+															</td>
+														</tr>
+														<tr className='py-0 pos-border-bottom'>
+															{/* <td></td> */}
+															<td colSpan="2"  className='py-0'>Vat(15%, Excluding Beverage Products)</td>
+															<td className='py-0'>
+																{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
+																{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
+															</td>
+														</tr>
+														{/* <tr>
+															<td colSpan='2' className='py-0'>Discount</td>
 															<td className='py-0'>
 																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_discount}{' '}
 																{currency_position === 'suffix' && currency_symbol}
 															</td>
-														</tr>
+														</tr> */}
 														<tr>
 															{/* <td></td> */}
-															<td colSpan="2" className='py-0'>
-																<strong>Payable</strong>
+															<td colSpan='2' className='py-0'>
+																<strong>Total Amount Payable</strong>
 															</td>
 															<td className='py-0'>
+																<strong>
 																{currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_payable}{' '}
 																{currency_position === 'suffix' && currency_symbol}
+																</strong>
 															</td>
 														</tr>
 													</tfoot>
@@ -686,20 +751,47 @@ const CurrentOrders = () => {
 											</td>
 										</tr>
 									</tbody>
-									<tfoot>
+									<tfoot className='pos-border-top'>
 										<tr>
 											<td>
-												<table className="table text-start table-sm">
+												<table className="table text-start table-sm m-0">
 													<tbody>
 														<tr>
-															<td className="border-bottom">
-																<h5 className="fs-6 fw-bold border-bottom mb-1">Guest Copy</h5>
-																<p className="mb-1">No. : {printPreviewContent?.invoice_id}</p>
-																<p className="mb-1">Signature : </p>
-																<p className="mb-1">Name : </p>
-																{!_.isNil(printPreviewContent?.hc_room) && <p className="mb-1">Room No. : {printPreviewContent?.hc_room}</p>}
-																<p className="mb-1">Guest/Company Name. : </p>
-																<p className="mb-0">Guest/Company GST Name : </p>
+															<td className='border-top pos-bottom p-1 py-3 pb-4'>
+																<div className="pos-btm-wrap">
+																	<div className="pos-btm-left">
+																		<p className="mb-1">No. {printPreviewContent?.invoice_id}</p>
+																	</div>
+																	<div className="pos-btm-right">
+																		<h5 className="fs-6 fw-bold">Guest Copy</h5>
+																	</div>
+																</div>
+
+																<p className="mb-1">Name </p>
+
+																<div className="pos-btm-wrap">
+																	<div className="pos-btm-left">
+																		{!_.isNil(printPreviewContent?.hc_room) && <p className="mb-1">Room No. {printPreviewContent?.hc_room}</p>}
+																	</div>
+																	<div className="pos-btm-right">
+																		<h5 className="fs-6 fw-bold">Signature</h5>
+																	</div>
+																</div>
+
+																<div className="pos-btm-line">
+																	<span>Guest/Company Name</span>
+																</div>
+
+																<div className="pos-btm-line">
+																	<span>Guest/Company GST No</span>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td className='p-0'>
+																<p className='pos-border-top pt-2 pb-1 m-0 text-center'>
+																	System Generated Invoice
+																</p>
 															</td>
 														</tr>
 													</tbody>
@@ -740,6 +832,7 @@ const CurrentOrders = () => {
 								</button>
 							</div>
 						</div>
+					</div>
 					)}
 
 					{isKitchenPrintContentShow && (
