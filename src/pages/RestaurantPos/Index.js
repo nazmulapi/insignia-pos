@@ -50,6 +50,7 @@ const RestaurantPos = () => {
 	const [isSubmissionFormOpen, setIsSubmissionFormOpen] = useState(false);
 	const [totalDiscount, setTotalDiscount] = useState();
 	const [totalAmount, setTotalAmount] = useState();
+	const [serviceChargeFreeAmount, setServiceChargeFreeAmount] = useState(); // beverage product
 	const [invoiceData, setInvoiceData] = useState();
 	const [allCategoryAndSubCategory, setAllCategoryAndSubCategory] = useState([]);
 	const [productsByCategory, setProductsByCategory] = useState([]);
@@ -307,7 +308,7 @@ const RestaurantPos = () => {
 		let productOrderFormDataObj = {};
 		const formData = new FormData(e.currentTarget);
 		for (let [key, value] of formData.entries()) {
-			if (['product_id', 'product_price', 'product_discount', 'total_discount', 'ordered_quantity', 'sub_total', 'total_amount'].includes(key)) {
+			if (['rcat_id', 'product_id', 'product_price', 'product_discount', 'total_discount', 'ordered_quantity', 'sub_total', 'total_amount'].includes(key)) {
 				productOrderFormDataObj[key] = Number.parseInt(value);
 			} else {
 				productOrderFormDataObj[key] = value;
@@ -628,9 +629,10 @@ const RestaurantPos = () => {
 									editable?.event_type === 'restaurant' ? comboPackageClickHandler(editable?.id) : searchSubCategoryOnChangeHandler(editable);
 								}
 							}}
-							getTotalInfo={(invoiceData, discount, amount, cType, cName, wName, tName) => {
+							getTotalInfo={(invoiceData, discount, amount, serviceChargeFreeAmount, cType, cName, wName, tName) => {
 								setTotalDiscount(discount);
 								setTotalAmount(amount);
+								setServiceChargeFreeAmount(serviceChargeFreeAmount)
 								setInvoiceData(invoiceData);
 								setCustomerType(cType);
 								setCustomerName(cName);
@@ -644,6 +646,7 @@ const RestaurantPos = () => {
 					invoiceData={invoiceData}
 					totalDiscount={totalDiscount}
 					totalAmount={totalAmount}
+					serviceChargeFreeAmount={serviceChargeFreeAmount}
 					customerType={customerType}
 					customerName={customerName}
 					waiterName={waiterName}
@@ -698,6 +701,11 @@ const RestaurantPos = () => {
 							</div>
 						</div>
 						<form onSubmit={(e) => onSubmit(e)} className="form-body">
+							<input
+								type="hidden"
+								name="rcat_id"
+								value={singleProductInfo?.rcat_id || null}
+							/>
 							<div className="row gx-3">
 								<div className="col-xl-3 d-none">
 									<div className="form-group mb-2">

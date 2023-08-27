@@ -43,6 +43,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
       label: "Reservation Customer",
     },
     { id: 4, value: "hotel", apiKeyWord: "hotel", label: "Hotel Customer" },
+    { id: 7, value: "walk", apiKeyWord: "walk", label: "Walking Customer" },
   ]);
   const [allTables, setAllTables] = useState([]);
   const [allWaiter, setAllWaiter] = useState([]);
@@ -180,14 +181,19 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
    */
   const calcTotalAmount = () => {
     let totalAmount = 0;
+    let serviceChargeFreeAmount = 0;
     invoiceData.forEach((data) => {
       totalAmount += data.amount;
+      if (data && data.hasOwnProperty('rcat_id') && data.rcat_id === 66) {
+        serviceChargeFreeAmount += data.amount;
+      }
     });
     const td = calcTotalDiscount();
     getTotalInfo(
       invoiceData,
       Number.parseInt(td),
       Number.parseInt(totalAmount),
+      Number.parseInt(serviceChargeFreeAmount),
       selectedCustomerType,
       selectedCustomerName,
       selectedWaiter,
@@ -213,11 +219,11 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
         if (!_.isUndefined(data)) {
           if (_.size(data) > 0) {
             let d = data.map((d) => {
-              const { first_name } = d;
+              const { first_name, last_name } = d;
               return {
                 ...d,
-                value: `${first_name}`,
-                label: `${first_name}`,
+                value: `${first_name} ${last_name}`,
+                label: `${first_name} ${last_name}`,
               };
             });
             setCustomersByCustomerType(d);
@@ -445,7 +451,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
                     onChange={(v) => customerNameOnChangeHandler(v)}
                     options={customersByCustomerType}
                   />
-                  {/* <button
+                  <button
 										type="button"
 										onClick={() => {
 											setIsNewCustomerModalShow(true);
@@ -453,7 +459,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
 										className="btn btn-primary bg-gradient border border-2 border-primary flex-shrink-0"
 									>
 										+
-									</button> */}
+									</button>
                 </div>
                 <Modal
                   show={isNewCustomerModalShow}

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const _ = require('lodash');
 const axios = require('axios');
 
-const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, customerName, waiterName, tableName }) => {
+const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, serviceChargeFreeAmount, customerType, customerName, waiterName, tableName }) => {
 	const [scannerBeepsSoundPlay] = useSound(scannerBeepsSound);
 	const [grandTotalAmount, setGrandTotalAmount] = useState(0);
 	const [taxByPercent, setTaxByPercent] = useState(15);
@@ -42,9 +42,9 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 	 * return {}
 	 */
 	const calcGrandTotal = () => {
-		let calcTaxChargeAmount = (totalAmount / 100) * taxByPercent;
-		let calcServiceChargeAmount = (totalAmount / 100) * serviceChargeByPercent;
-		setTaxChargeAmount(Math.round(calcTaxChargeAmount));
+		let calcServiceChargeAmount = Math.round(((totalAmount - serviceChargeFreeAmount) / 100) * serviceChargeByPercent);
+		let calcTaxChargeAmount = Math.round(((totalAmount - serviceChargeFreeAmount + calcServiceChargeAmount) / 100) * taxByPercent);
+		setTaxChargeAmount(calcTaxChargeAmount);
 		setServiceChargeAmount(calcServiceChargeAmount);
 		setGrandTotalAmount(() => {
 			return Math.round(totalAmount + calcTaxChargeAmount + calcServiceChargeAmount);
@@ -128,7 +128,15 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, customerType, cus
 		let tDiscount = Math.round(Number(totalDiscount));
 		let payable = Math.round(Number(grandTotalAmount));
 		let posInfo = { posType: 'restaurant', orderDate: new Date().toLocaleString() };
-		let transDetails = { taxChargeAmount: taxByPercent, serviceChargeAmount: serviceChargeByPercent, total, totalDiscount: tDiscount, payable };
+		let transDetails = {
+			taxChargePercent: taxByPercent,
+			taxChargeAmount: taxChargeAmount,
+			serviceChargePercent: serviceChargeByPercent,
+			serviceChargeAmount: serviceChargeAmount,
+			total,
+			totalDiscount: tDiscount,
+			payable
+		};
 		grandTotalObj['resortsInfo'] = {
 			posInfo,
 			invoice_id: orderData?.invoice_id ?? null,
