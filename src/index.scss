@@ -27,10 +27,11 @@ body {
 	border: none;
 }
 .vatStyle {
-	width: 120px;
+	width: 100px;
 	background: #c9e3d7;
 	border: none;
 	font-weight: bold;
+	border-radius: 0;
 }
 
 .text-pos {
@@ -85,4 +86,11 @@ body {
 	border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 	border-style: dashed !important;
 	border-color: var(--border-color) !important;
+}
+
+// reset
+.c-btn {
+	border: var(--bs-btn-border-width) solid var(--bs-btn-border-color) !important;
+	border-radius: var(--bs-btn-border-radius) !important;
+	background-color: var(--bs-btn-bg) !important;
 }
