@@ -213,16 +213,16 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, serviceChargeFree
 		<>
 			<div className="total-sticky-overview position-fixed bottom-0 w-100 end-0 p-2 px-4 bg-light border-top" style={{ zIndex: '999' }}>
 				<div className="row align-items-center justify-content-between">
-					<div className="col-xl-7">
+					<div className="col-xl-8">
 						<div className="row align-items-center">
-							<div className="col-sm-6 col-xl-4 mb-2 mb-md-0">
-								<div className="overview-widget d-flex align-items-center justify-content-md-end gap-3 mb-1">
+							<div className="col-sm-6 col-xl-4 mb-md-0 d-flex justify-content-end flex-wrap flex-column">
+								<div className="overview-widget d-flex align-items-center justify-content-end gap-3 mb-1">
 									<p className="mb-0 flex-shrink-0">Vat({taxByPercent}%) :</p>
-									<span style={{ width: '120px' }} className="form-control form-control-sm vatStyle">
+									<span style={{ width: '100px' }} className="badge fs-6 text-start text-dark vatStyle">
 										{currency_position === 'prefix' && currency_symbol} {Number(taxChargeAmount).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
 									</span>
 								</div>
-								<div className="overview-widget d-flex align-items-center justify-content-md-end gap-3">
+								{/* <div className="overview-widget d-flex align-items-center justify-content-md-end gap-3">
 									<p className="mb-0 flex-shrink-0">Service Charge(10%) :</p>
 									<input
 										type="number"
@@ -234,32 +234,32 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, serviceChargeFree
 											scannerBeepsSoundPlay();
 										}}
 									/>
+								</div> */}
+								<div className="overview-widget d-flex align-items-center justify-content-end gap-3 mb-1">
+									<p className="mb-0 flex-shrink-0">Service Charge(10%) :</p>
+									<span className="badge fs-6 text-start bg-info text-dark bg-opacity-50 rounded-0" style={{ minWidth: '100px' }}>
+										{currency_position === 'prefix' && currency_symbol} {Number(serviceChargeAmount).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
+									</span>
 								</div>
 							</div>
-							<div className="col-sm-6 col-xl-3">
-								<div className="overview-widget d-flex align-items-center justify-content-sm-end gap-3 mb-1">
-									<p className="mb-0 fw-bold flex-shrink-0">Total :</p>
+							<div className="col-sm-6 col-xl-4 d-flex justify-content-end flex-wrap flex-column">
+								<div className="overview-widget d-flex align-items-center justify-content-end gap-3 mb-1">
+									<p className="mb-0 fw-bold flex-shrink-0">Total Amount :</p>
 									<span className="badge fs-6 text-start bg-primary text-dark bg-opacity-50 rounded-0" style={{ minWidth: '100px' }}>
 										{currency_position === 'prefix' && currency_symbol} {Math.round(totalAmount)}
 										{currency_position === 'suffix' && currency_symbol}
 									</span>
 								</div>
-								<div className="overview-widget d-flex align-items-center justify-content-sm-end gap-3 mb-1">
+								<div className="overview-widget d-flex align-items-center justify-content-end gap-3 mb-1">
 									<p className="mb-0 fw-bold flex-shrink-0">Discount :</p>
 									<span className="badge fs-6 text-start bg-danger text-dark bg-opacity-50 rounded-0" style={{ minWidth: '100px' }}>
 										{currency_position === 'prefix' && currency_symbol} {totalDiscount} {currency_position === 'suffix' && currency_symbol}
 									</span>
 								</div>
 							</div>
-							<div className="col-sm-12 col-xl-5 col-xxl-4">
-								<div className="overview-widget d-flex align-items-center justify-content-sm-end gap-3 mb-1">
-									<p className="mb-0 fw-bold flex-shrink-0">Service Charge :</p>
-									<span className="badge fs-6 text-start bg-info text-dark bg-opacity-50 rounded-0" style={{ minWidth: '100px' }}>
-										{currency_position === 'prefix' && currency_symbol} {Number(serviceChargeAmount).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
-									</span>
-								</div>
-								<div className="overview-widget d-flex align-items-center justify-content-sm-end gap-3 mb-1">
-									<p className="mb-0 fw-bold flex-shrink-0">Payable :</p>
+							<div className="col-sm-12 col-xl-4 d-flex justify-content-end flex-wrap flex-column">
+								<div className="overview-widget d-flex align-items-center justify-content-end gap-3 mb-1">
+									<p className="mb-0 fw-bold flex-shrink-0">Payable Amount :</p>
 									<span className="badge fs-6 text-start bg-success rounded-0" style={{ minWidth: '100px' }}>
 										{currency_position === 'prefix' && currency_symbol} {Math.round(grandTotalAmount)} {currency_position === 'suffix' && currency_symbol}
 									</span>
@@ -267,8 +267,8 @@ const GrandTotal = ({ invoiceData, totalDiscount, totalAmount, serviceChargeFree
 							</div>
 						</div>
 					</div>
-					<div className="col-xl-5 text-xl-end mt-1 mt-xl-0">
-						<div className="btn-group mt-2 mt-xl-0" role="group">
+					<div className="col-xl-4 text-xl-end mt-1 mt-xl-0 d-flex justify-content-end flex-wrap">
+						<div className="btn-group mt-2 mt-xl-0" role="group" style={{maxWidth: "234px"}}>
 							<button
 								type="button"
 								onClick={() => {

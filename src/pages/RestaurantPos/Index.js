@@ -572,7 +572,7 @@ const RestaurantPos = () => {
 									? foodNamesFiltered.map((f) => {
 											return (
 												<li key={f?.id} className="nav-item">
-													<button type="button" className="nav-link px-4 py-1 btn-info btn text-light fs-6" onClick={(e) => submissionFormOpen(f, e)}>
+													<button type="button" className="nav-link px-4 py-1 btn-info btn text-light fs-6 c-btn" onClick={(e) => submissionFormOpen(f, e)}>
 														{f?.food_name}
 													</button>
 												</li>
@@ -581,7 +581,7 @@ const RestaurantPos = () => {
 									: foodNames.map((f) => {
 											return (
 												<li key={f?.id} className="nav-item">
-													<button type="button" className="nav-link px-4 py-1 btn-info btn text-light fs-6" onClick={(e) => submissionFormOpen(f, e)}>
+													<button type="button" className="nav-link px-4 py-1 btn-info btn text-light fs-6 c-btn" onClick={(e) => submissionFormOpen(f, e)}>
 														{f?.food_name}
 													</button>
 												</li>

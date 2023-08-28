@@ -293,6 +293,7 @@ const CurrentOrders = () => {
 										<th className="text-nowrap">Waiter Name</th>
 										<th className="text-nowrap">Status</th>
 										<th className="text-nowrap">Items</th>
+										<th className="text-nowrap">Payable Amount</th>
 										<th className="text-nowrap">Action</th>
 									</tr>
 								</thead>
@@ -314,6 +315,9 @@ const CurrentOrders = () => {
 												</td>
 												<td>
 													{co?.products.length}
+												</td>
+												<td>
+													{co?.trans_payable}
 												</td>
 												<td>
 													{co?.status === 'order' ? (
