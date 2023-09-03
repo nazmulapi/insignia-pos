@@ -43,7 +43,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
       label: "Reservation Customer",
     },
     { id: 4, value: "hotel", apiKeyWord: "hotel", label: "Hotel Customer" },
-    { id: 7, value: "walk", apiKeyWord: "walk", label: "Walking Customer" },
+    { id: 7, value: "walk", apiKeyWord: "walk", label: "Walk-In Customer" },
   ]);
   const [allTables, setAllTables] = useState([]);
   const [allWaiter, setAllWaiter] = useState([]);
@@ -112,7 +112,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
             reset();
             setSelectedCustomerType("");
             setSelectedCustomerName("");
-            toast.success("Successfully Walking Customer Created !", {
+            toast.success("Successfully Walk-In Customer Created !", {
               position: "bottom-right",
               theme: "colored",
             });
@@ -247,7 +247,7 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
     if (value?.id === 7) {
       const customer = {
         "customer_id": 0,
-        "first_name": "Walking",
+        "first_name": "Walk-In",
         "last_name": "Customer",
         "email": "",
         "cust_phone": "",

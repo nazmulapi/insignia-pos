@@ -39,7 +39,7 @@ const CurrentOrders = () => {
 	const getCurrentOrders = async () => {
 		try {
 			let response = await axios.get(`/restaurant-order-list`);
-			let data = response?.data.reverse();
+			let data = response?.data;
 			!_.isUndefined(data) && setCurrentOrders(data);
 		} catch (error) {
 			console.log(error);
@@ -53,7 +53,7 @@ const CurrentOrders = () => {
 	const getCurrentOrdersByFilter = async (status) => {
 		try {
 			let response = await axios.get(`/restaurant-order-list/${status}`);
-			let data = response?.data?.data.reverse();
+			let data = response?.data?.data;
 			!_.isUndefined(data) && setCurrentOrders(data);
 		} catch (error) {
 			console.log(error);
