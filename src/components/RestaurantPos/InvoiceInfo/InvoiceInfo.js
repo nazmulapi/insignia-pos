@@ -244,7 +244,20 @@ const InvoiceInfo = ({ getTotalInfo, editInvoiceProduct }) => {
   const customerTypeOnChangeHandler = (value) => {
     getCustomerByType(value);
     setSelectedCustomerType(value);
-    setSelectedCustomerName("");
+    if (value?.id === 7) {
+      const customer = {
+        "customer_id": 0,
+        "first_name": "Walking",
+        "last_name": "Customer",
+        "email": "",
+        "cust_phone": "",
+        "value": "",
+        "label": ""
+      }
+      setSelectedCustomerName(customer);
+    } else {
+      setSelectedCustomerName("");
+    }
   };
 
   /**
