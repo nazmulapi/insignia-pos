@@ -426,6 +426,7 @@ const CurrentOrders = () => {
 													</div>
 												</td>
 											</tr>
+											{printPreviewContent?.customer_id !== 0 &&
 											<tr>
 												<td>
 													<h5 className="fs-6 fw-bold p-1 m-0 pt-0">Customer Info</h5>
@@ -434,6 +435,7 @@ const CurrentOrders = () => {
 													</p>
 												</td>
 											</tr>
+											}
 											<tr>
 												<td>
 													<table className="table text-start table-sm m-0">
@@ -485,7 +487,7 @@ const CurrentOrders = () => {
 															</tr>
 															<tr className='pos-border-bottom'>
 																{/* <td></td> */}
-																<td colSpan='2' className='py-0'>SC (10%, Excluding Beverage Products)</td>
+																<td colSpan='2' className='py-0'>SC (10%, Excluding Bottle Beverage Products)</td>
 																<td className='py-0'>
 																	{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_service).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
 																	{/* {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)} */}
@@ -505,7 +507,7 @@ const CurrentOrders = () => {
 															</tr>
 															<tr className='py-0 pos-border-bottom'>
 																{/* <td></td> */}
-																<td colSpan="2"  className='py-0'>Vat(15%, Excluding Beverage Products)</td>
+																<td colSpan="2"  className='py-0'>Vat(15%, Excluding Bottle Beverage Products)</td>
 																<td className='py-0'>
 																	{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
 																	{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
@@ -646,6 +648,7 @@ const CurrentOrders = () => {
 												</div>
 											</td>
 										</tr>
+										{printPreviewContent?.customer_id !== 0 &&
 										<tr>
 											<td>
 												<h5 className="fs-6 fw-bold p-1 m-0 pt-0">Customer Info</h5>
@@ -654,6 +657,7 @@ const CurrentOrders = () => {
 												</p>
 											</td>
 										</tr>
+										}
 										<tr>
 											<td>
 												<table className="table text-start table-sm m-0">
@@ -705,7 +709,7 @@ const CurrentOrders = () => {
 														</tr>
 														<tr className='pos-border-bottom'>
 															{/* <td></td> */}
-															<td colSpan='2' className='py-0'>SC (10%, Excluding Beverage Products)</td>
+															<td colSpan='2' className='py-0'>SC (10%, Excluding Bottle Beverage Products)</td>
 															<td className='py-0'>
 																{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_service).toFixed(2)} {currency_position === 'suffix' && currency_symbol}
 																{/* {Number((printPreviewContent?.trans_total / 100) *  printPreviewContent?.trans_service).toFixed(2)} */}
@@ -725,7 +729,7 @@ const CurrentOrders = () => {
 														</tr>
 														<tr className='py-0 pos-border-bottom'>
 															{/* <td></td> */}
-															<td colSpan="2"  className='py-0'>Vat(15%, Excluding Beverage Products)</td>
+															<td colSpan="2"  className='py-0'>Vat(15%, Excluding Bottle Beverage Products)</td>
 															<td className='py-0'>
 																{/* {currency_position === 'prefix' && currency_symbol} {printPreviewContent?.trans_tax} {currency_position === 'suffix' && currency_symbol} */}
 																{currency_position === 'prefix' && currency_symbol} {Number(printPreviewContent?.trans_tax.toFixed(2))} {currency_position === 'suffix' && currency_symbol}
